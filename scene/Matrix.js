@@ -50,7 +50,7 @@ export class Matrix {
 
     //return identity matrix
     static identity() {
-        console.log(Matrix.scaleConst(1.0));
+        // console.log(Matrix.scaleConst(1.0));     
         return Matrix.scaleConst(1.0);
     }
 

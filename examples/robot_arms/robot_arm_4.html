@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset=utf-8>
+		<title>Robot Arm 4</title>
+		<link rel="shortcut icon" href="#" />
+		<style>
+			body {
+				margin: 0;
+				overflow: auto;
+			}
+			#resizer {
+				float: left;
+				overflow: hidden;
+				resize: both;
+				width: 600px;
+				height: 600px;
+			}
+			#rotate {
+				margin-top: 50px;
+				padding: 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="resizer">
+			<canvas id="pixels" width=600 height=600></canvas>
+		</div>
+		<div style="float: left; padding: 2px;">
+			<button onclick="location.href = 'robot_arm_1.html';">Robot Arm 1</button>
+			<button onclick="location.href = 'robot_arm_2.html';">Robot Arm 2</button>
+			<button onclick="location.href = 'robot_arm_3.html';">Robot Arm 3</button>
+			<!-- <button onclick="location.href = 'robot_arms_1.html';">Robot Arms 1</button>
+			<button onclick="location.href = 'robot_arms_2.html';">Robot Arms 2</button>
+			<button onclick="location.href = 'robot_arms_3.html';">Robot Arms 3</button>
+			<button onclick="location.href = 'robot_arms_4.html';">Robot Arms 4</button> -->
+			<div style="margin-top: 50px;">
+				<button id="rotate">Rotate</button>
+			</div>
+		</div>
+
+		<script src="../../scene/Scene.js" type="module"></script>
+		<script src="../../scene/Camera.js" type="module"></script>
+		<script src="../../scene/Model.js" type="module"></script>
+		<script src="../../scene/ModelShading.js" type="module"></script>
+		<script src="../../scene/LineSegment.js" type="module"></script>
+		<script src="../../scene/Vertex.js" type="module"></script>
+		<script src="../../scene/Vector.js" type="module"></script>
+		<script src="../../scene/Matrix.js" type="module"></script>
+		<script src="../../scene/Position.js" type="module"></script>
+		<script src="../../scene/OrthographicNormalizeMatrix.js" type="module"></script>
+		<script src="../../scene/PerspectiveNormalizeMatrix.js" type="module"></script>
+
+		<script src="../../pipeline/Pipeline.js" type="module"></script>
+		<script src="../../pipeline/Projection.js" type="module"></script>
+		<script src="../../pipeline/Rasterize.js" type="module"></script>
+		<script src="../../pipeline/View2Camera.js" type="module"></script>
+		<script src="../../pipeline/Model2View.js" type="module"></script>
+
+		<script src="../../models/Axes2D.js" type="module"></script>
+		<script src="../../models/Cube.js" type="module"></script>
+		<script src="../../models/Cube2.js" type="module"></script>
+		<script src="../../models/Circle.js" type="module"></script>
+		<script src="../../models/CylinderSector.js" type="module"></script>
+		<script src="../../framebuffer/FrameBuffer.js" type="module"></script>
+		<script src="../../framebuffer/Viewport.js" type="module"></script>
+
+		<script src="robot_arm_4.js" type="module"></script>
+	</body>
+</html>
