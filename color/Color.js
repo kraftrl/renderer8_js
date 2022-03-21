@@ -9,6 +9,7 @@ export class Color{
     static Green = new Uint8ClampedArray([0,255,0,255]);
     static Blue = new Uint8ClampedArray([0,0,255,255]);
     static Orange = new Uint8ClampedArray([255, 127, 0, 255]);
+    static Yellow = new Uint8ClampedArray([255, 255, 0, 255]);
     static GAMMA = 1/2.2;
 
     // Apply gamma-encoding (gamma-compression) to the colors.

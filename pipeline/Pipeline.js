@@ -62,7 +62,7 @@ export class Pipeline {
         ctm = ctm.timesMatrix( position.matrix );
 
         // Render the Position's Model (if it exits and is visible).
-        if ( position.model.visible ) {
+        if ( position.model != null && position.model.visible ) {
             // 1. Apply the current model-to-view coordinate transformation.
             var model1 = Model2View.model2view(position.model, ctm);
 

@@ -2,15 +2,6 @@ import { Scene } from '../../scene/Scene.js';
 import { ModelShading } from '../../scene/ModelShading.js';
 import { Matrix } from '../../scene/Matrix.js';
 import { Position } from '../../scene/Position.js';
-import { OrthographicNormalizeMatrix } from '../../scene/OrthographicNormalizeMatrix.js';
-import { PerspectiveNormalizeMatrix } from '../../scene/PerspectiveNormalizeMatrix.js';
-import { ObjSimpleModel } from '../../models/ObjSimpleModel.js';
-import { GRSModel } from '../../models/GRSModel.js';
-import { Cube2 } from '../../models/Cube2.js';
-import { Pyramid } from '../../models/Pyramid.js';
-import { Axes2D } from '../../models/Axes2D.js';
-import { Circle } from '../../models/Circle.js';
-import { CylinderSector } from '../../models/CylinderSector.js';
 import { Pipeline } from '../../pipeline/Pipeline.js';
 import { FrameBuffer } from '../../framebuffer/FrameBuffer.js';
 import { Color } from '../../color/Color.js';
@@ -68,7 +59,12 @@ var sun_p = null;
 var planetMoon_p = null;
 var moon_p = null;
 
-const scene = new Scene();
+/*
+    See the above picture of the tree that this code creates.
+*/
+
+// Create the Scene object that we shall render
+const scene = new Scene(); // A Solar System
 
 const right  = 6;
 const left   = -right;
@@ -79,7 +75,7 @@ scene.camera.projOrtho(left, right, bottom, top);
 
 // Create the sun.
 scene.addPosition([new Position(new Sphere(1.0, 10, 10))]);
-ModelShading.setColor(scene.getPosition(0).model, Color.Red);
+ModelShading.setColor(scene.getPosition(0).model, Color.Yellow);
 sun_p = scene.getPosition(0);
 
 // Create the planet.
@@ -94,8 +90,11 @@ moon_p = planetMoon_p.getNestedPosition(0);
 
 print_help_message();
 
-rotateModels();
-display();
+fps = 20;
+timer = setInterval(function() {
+	rotateModels();
+	display();
+}, 1000/fps);
 
 document.addEventListener('keypress', keyPressed);
 
@@ -110,31 +109,30 @@ function keyPressed(event) {
 		let p = scene.camera.perspective ? "perspective" : "orthographic";
 		console.log("Using " + p + " projection");
 	}
-	else if('/' == c) {
-		// Push the solar system away from where the camera is.
-		sun_p.matrix2Identity();
-		//sun_p.matrix.mult(Matrix.translate(0, 0, -8));
-		// Rotate the plane of the ecliptic
-		// (rotate the sun's xz-plane about the x-axis).
-		sun_p.matrix.mult(Matrix.rotateX(ecliptic));
-  
-		// Rotate the sun on it axis.
-		sun_p.matrix.mult(Matrix.rotateY(planetOrbitRot));
-
-		// Place the planet-moon away from the sun and rotate the planet-moon on its axis.
-		planetMoon_p.matrix2Identity();
-		planetMoon_p.matrix.mult(Matrix.translate(planetOrbitRadius, 0, 0));
-		planetMoon_p.matrix.mult(Matrix.rotateY(moonOrbitRot));
-  
-		// Place the moon away from the planet and rotate the moon on its axis.
-		moon_p.matrix2Identity();
-		moon_p.matrix.mult(Matrix.translate(moonOrbitRadius, 0, 0));
-		moon_p.matrix.mult(Matrix.rotateY(moonAxisRot));
-  
-		// Update the parameters for the next frame.
-		planetOrbitRot += 1.0;
-		moonOrbitRot += 5.0;
-		moonAxisRot -= 10.0;
+	else if ('f' == c) {
+	   fps -= 1;
+	   clearInterval(timer);
+	   if (0 >= fps) {
+		   fps = 0;
+		   clearInterval(timer);    
+		} else {
+			setFPS();
+		}  
+		console.log("fps = " + fps);
+	}
+	else if ('F' == c) {
+	   fps += 1;
+	   console.log("fps = " + fps);
+	   clearInterval(timer);
+	   setFPS();
+	}
+	else if ('e' == c) {
+	   ecliptic -= 1;
+	   console.log("ecliptic = " + ecliptic);
+	}
+	else if ('E' == c) {
+	   ecliptic += 1;
+	   console.log("ecliptic = " + ecliptic);
 	}
 
 	// Set up the camera's view volume.
@@ -146,9 +144,13 @@ function keyPressed(event) {
 	{
 	   scene.camera.projOrtho(-6, 6, -6, 6);
 	}
-						
-	// add image data
-	display();
+}
+
+function setFPS() {
+    	timer = setInterval(function() {
+        rotateModels();
+        display();
+    }, 1000/fps);
 }
 
 function display(){
