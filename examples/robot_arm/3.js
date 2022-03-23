@@ -10,10 +10,59 @@ import { Pipeline } from "../../pipeline/Pipeline.js";
 import { Scene } from "../../scene/Scene.js";
 import { Vertex } from "../../scene/Vertex.js";
 
+/**
+   Draw an interactive robot arm with shoulder, elbow, wrist, and finger joints.
+   Make each part of the robot arm extendable.
+<p>
+   The tree for this scene is shown below.
+<p>
+   Remember that every position node in the tree contains a matrix,
+   a model and a list of nested positions. The model may be empty,
+   and the list of nested positions may also be empty, but the matrix
+   cannot be "empty" (if you don't give it a value, then it is the
+   identity matrix, I).
+<p>
+<pre>{@code
+          Scene
+         /     \
+        /       \
+  Camera   List<Position>
+               |
+               |
+            Position
+            /  |    \
+           /   |     \
+     Matrix    |     List<Position>
+       RS      |           |
+               |           |
+              /        Position
+             /         /   |   \
+            /         /    |    \
+           /     Matrix   /      List<Position>
+          |       TRS    /             |
+          |             /              |
+          |            /            Position
+          |           /             /  |   \
+          |          /             /   |    \
+          |         /        Matrix    |     List<Position>
+          |        /          TRS      |           |
+          |       /                   /            |
+           \     /                   /          Position
+            Model ------------------/           /  |   \
+          armSegment                           /   |    \
+                    \                    Matrix    |     List<Position>
+                     \                    TRS     /             |
+                      \                          /            empty
+                       \------------------------/
+
+</pre>
+*/
+
 const resizer = document.getElementById("resizer");
 const ctx = document.getElementById("pixels").getContext("2d");
 var fb = new FrameBuffer(undefined, resizer.offsetWidth, resizer.offsetHeight);
 
+var rotate = true;
 var shoulderRotation = 0.0;
 var elbowRotation = 0.0;
 var wristRotation = 0.0;
@@ -40,42 +89,43 @@ shoulder_p.matrix = Matrix.translate(0, 0, -1);
 /*
     Create the scene graph.
 */
-const shoulder = new Model("shoulder");
-shoulder.addVertex([new Vertex(0, 0, 0)]);
-shoulder.addVertex([new Vertex(shoulderLength, 0, 0)]);
-shoulder.addLineSegment([new LineSegment(0, 1)]);
-ModelShading.setColor(shoulder, Color.Blue);
-// Add the shoulder Model to the Scene's Position.
-shoulder_p.model = shoulder;
+// Create one Model that can be used
+// for each part of the robot arm.
+const v0 = new Vertex(0, 0, 0);
+const v1 = new Vertex(1, 0, 0);
+const armSegment = new Model("arm segment");
+armSegment.addVertex([v0, v1]);
+armSegment.addLineSegment([new LineSegment(0, 1)]);
+ModelShading.setColor(armSegment, Color.Blue);
 
-const elbow = new Model("elbow");
-elbow.addVertex([new Vertex(0, 0, 0)]);
-elbow.addVertex([new Vertex(elbowLength, 0, 0)]);
-elbow.addLineSegment([new LineSegment(0, 1)]);
-ModelShading.setColor(elbow, Color.Blue);
-elbow_p = new Position(elbow);
+// Add the armSegment Model to the Scene's Position.
+shoulder_p.model = armSegment;
+
+elbow_p = new Position(armSegment);
 shoulder_p.addNestedPosition([elbow_p]);
 
-const wrist = new Model("wrist");
-wrist.addVertex([new Vertex(0, 0, 0)]);
-wrist.addVertex([new Vertex(wristLength, 0, 0)]);
-wrist.addLineSegment([new LineSegment(0, 1)]);
-ModelShading.setColor(wrist, Color.blue);
-wrist_p = new Position(wrist);
+wrist_p = new Position(armSegment);
 elbow_p.addNestedPosition([wrist_p]);
 
-const finger = new Model("finger");
-finger.addVertex([new Vertex(0, 0, 0)]);
-finger.addVertex([new Vertex(fingerLength, 0, 0)]);
-finger.addLineSegment([new LineSegment(0, 1)]);
-ModelShading.setColor(finger, Color.blue);
-finger_p = new Position(finger);
+finger_p = new Position(armSegment);
 wrist_p.addNestedPosition([finger_p]);
 
 // Initialize the nested matrices for the sub models.
-elbow_p.matrix  = Matrix.translate(shoulderLength, 0, 0);
-wrist_p.matrix  = Matrix.translate(elbowLength,    0, 0);
-finger_p.matrix = Matrix.translate(wristLength,    0, 0);
+shoulder_p.matrix.mult(Matrix.scale(shoulderLength,
+									shoulderLength,
+									1));
+elbow_p.matrix.mult(Matrix.translate(1, 0, 0));
+elbow_p.matrix.mult(Matrix.scale(elbowLength/shoulderLength,
+									elbowLength/shoulderLength,
+									1));
+wrist_p.matrix.mult(Matrix.translate(1, 0, 0));
+wrist_p.matrix.mult(Matrix.scale(wristLength/elbowLength,
+									wristLength/elbowLength,
+									1));
+finger_p.matrix.mult(Matrix.translate(1, 0, 0));
+finger_p.matrix.mult(Matrix.scale(fingerLength/wristLength,
+									fingerLength/wristLength,
+									1));
 
 print_help_message();
 display(true);
@@ -169,47 +219,86 @@ function keyPressed(e){
         wristLength = 0.2;
         fingerLength = 0.1;
 	}
-	else if ('s' == c) {
-		shoulderRotation += 2.0;
-	}
-	else if ('S' == c) {
-		shoulderRotation -= 2.0;
-	}
-	else if ('e' == c) {
-		elbowRotation += 2.0;
-	}
-	else if ('E' == c) {
-		elbowRotation -= 2.0;
-	}
-	else if ('w' == c) {
-		wristRotation += 2.0;
-	}
-	else if ('W' == c) {
-		wristRotation -= 2.0;
-	}
-	else if ('f' == c) {
-		fingerRotation += 2.0;
-	}
-	else if ('F' == c) {
-		fingerRotation -= 2.0;
+	else if (rotate) {
+		if ('s' == c) {
+			shoulderRotation += 2.0;
+		}
+		else if ('S' == c) {
+			shoulderRotation -= 2.0;
+		}
+		else if ('e' == c) {
+			elbowRotation += 2.0;
+		}
+		else if ('E' == c) {
+			elbowRotation -= 2.0;
+		}
+		else if ('w' == c) {
+			wristRotation += 2.0;
+		}
+		else if ('W' == c) {
+			wristRotation -= 2.0;
+		}
+		else if ('f' == c) {
+			fingerRotation += 2.0;
+		}
+		else if ('F' == c) {
+			fingerRotation -= 2.0;
+		}
+	} else if (!rotate) {
+		if ('s' == c) {
+			shoulderLength += 0.02;
+		}
+		else if ('S' == c) {
+			shoulderLength -= 0.02;
+		}
+		else if ('e' == c) {
+			elbowLength += 0.02;
+		}
+		else if ('E' == c) {
+			elbowLength -= 0.02;
+		}
+		else if ('w' == c) {
+			wristLength += 0.02;
+		}
+		else if ('W' == c) {
+			wristLength -= 0.02;
+		}
+		else if ('f' == c) {
+			fingerLength += 0.02;
+		}
+		else if ('F' == c) {
+			fingerLength -= 0.02;
+		}
 	}
 
 	// Update the nested matrices for the sub models.
 	shoulder_p.matrix2Identity();
 	shoulder_p.matrix.mult(Matrix.translate(0, 0, -1));
 	shoulder_p.matrix.mult(Matrix.rotateZ(shoulderRotation));
+	shoulder_p.matrix.mult(Matrix.scale(shoulderLength,
+										shoulderLength,
+										1));
 
 	elbow_p.matrix2Identity();
-	elbow_p.matrix.mult(Matrix.translate(shoulderLength, 0, 0));
+	elbow_p.matrix.mult(Matrix.translate(1, 0, 0));
 	elbow_p.matrix.mult(Matrix.rotateZ(elbowRotation));
+	elbow_p.matrix.mult(Matrix.scale(elbowLength/shoulderLength,
+									 elbowLength/shoulderLength,
+									 1));
 
 	wrist_p.matrix2Identity();
-	wrist_p.matrix.mult(Matrix.translate(elbowLength, 0, 0));
+	wrist_p.matrix.mult(Matrix.translate(1, 0, 0));
 	wrist_p.matrix.mult(Matrix.rotateZ(wristRotation));
+	wrist_p.matrix.mult(Matrix.scale(wristLength/elbowLength,
+									 wristLength/elbowLength,
+									 1));
 
 	finger_p.matrix2Identity();
-	finger_p.matrix.mult(Matrix.translate(wristLength, 0, 0));
+	finger_p.matrix.mult(Matrix.translate(1, 0, 0));
 	finger_p.matrix.mult(Matrix.rotateZ(fingerRotation));
+	finger_p.matrix.mult(Matrix.scale(fingerLength/wristLength,
+									  fingerLength/wristLength,
+									  1));
 
 	// Render again.
     display(true);
@@ -223,14 +312,28 @@ function print_help_message()
     console.log("Use the 'C' key to randomly change arm segment colors.");
     console.log("Use the 'r' key to randomly change arm segment end colors.");
     console.log("Use the 'R' key to randomly change arm hinge colors.");
-    console.log("Use the s/S keys to rotate the arm at the shoulder.");
-    console.log("Use the e/E keys to rotate the arm at the elbow.");
-    console.log("Use the w/W keys to rotate the arm at the wrist.");
-    console.log("Use the f/F keys to rotate the arm at the finger.");
+	if (rotate){
+		console.log("Use the s/S keys to rotate the arm at the shoulder.");
+		console.log("Use the e/E keys to rotate the arm at the elbow.");
+		console.log("Use the w/W keys to rotate the arm at the wrist.");
+		console.log("Use the f/F keys to rotate the arm at the finger.");
+	} else {
+		console.log("Use the s/S keys to extend the length of the arm at the shoulder.");
+		console.log("Use the e/E keys to extend the length of the arm at the elbow.");
+		console.log("Use the w/W keys to extend the length of the arm at the wrist.");
+		console.log("Use the f/F keys to extend the length of the arm at the finger.");
+	}
     console.log("Use the '=' key to reset the robot arm.");
     console.log("Use the 'h' key to redisplay this help message.");
 }
 
+var rotateElement = document.getElementById("rotate");
+rotateElement.onclick = function () {
+	rotate = ! rotate;
+	rotateElement.innerText = (rotate ? "Rotate" : "Lengthen");
+	document.getElementById("rotateHelp").style.display = rotate ? "block" : "none";
+	document.getElementById("lengthenHelp").style.display = rotate ? "none" : "block";
+}
 document.addEventListener("keypress", keyPressed);
 var resizeObserver = new ResizeObserver(function () { display(false); });
 resizeObserver.observe(document.getElementById("resizer"));

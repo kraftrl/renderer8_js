@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset=utf-8>
-		<title>solar_system</title>
+		<title>Robot Arm 2</title>
 		<link rel="shortcut icon" href="#" />
 		<style>
 			body {
@@ -16,13 +16,49 @@
 				width: 600px;
 				height: 600px;
 			}
+			button {
+				cursor: pointer;
+			}
+			help {
+				padding: 5px;
+				margin: 20px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				background-color: lightgray;
+				border: 2px solid black;
+			}
 		</style>
 	</head>
 
 	<body>
+		<div style="width: 100%;">
+			<div style="text-align: center; font-size: x-large;">Robot Arm 2</div>
+		</div>
 		<div id="resizer">
 			<canvas id="pixels" width=600 height=600></canvas>
 		</div>
+		<div style="float: left; padding: 2px;">
+			<button onclick="location.href = '1.html';">Robot Arm 1</button>
+			<button onclick="location.href = '3.html';">Robot Arm 3</button>
+			<button onclick="location.href = '4.html';">Robot Arm 4</button>
+		</div>
+		<div style="margin: 2px; position: absolute; top: 0; right: 0;">
+			<button style="font-size: medium;" onclick="location = location.origin + '/examples';">Home</button>
+		</div>
+		<help>
+			Use the 'a' key to toggle antialiasing on and off.<br>
+			Use the 'g' key to toggle gamma correction on and off.<br>
+			Use the 'c' key to change the random solid arm color.<br>
+			Use the 'C' key to randomly change arm segment colors.<br>
+			Use the 'r' key to randomly change arm segment end colors.<br>
+			Use the 'R' key to randomly change arm hinge colors.<br>
+			Use the s/S keys to rotate the arm at the shoulder.<br>
+			Use the e/E keys to rotate the arm at the elbow.<br>
+			Use the w/W keys to rotate the arm at the wrist.<br>
+			Use the f/F keys to rotate the arm at the finger.<br>
+			Use the '=' key to reset the robot arm.<br>
+		</help>
 
 		<script src="../../scene/Scene.js" type="module"></script>
 		<script src="../../scene/Camera.js" type="module"></script>
@@ -50,6 +86,6 @@
 		<script src="../../framebuffer/FrameBuffer.js" type="module"></script>
 		<script src="../../framebuffer/Viewport.js" type="module"></script>
 
-		<script src="solar_system.js" type="module"></script>
+		<script src="2.js" type="module"></script>
 	</body>
 </html>

@@ -10,9 +10,61 @@ import { Pipeline } from "../../pipeline/Pipeline.js";
 import { Scene } from "../../scene/Scene.js";
 import { Vertex } from "../../scene/Vertex.js";
 
+/**
+   Draw an interactive robot arm with shoulder, elbow, wrist, and finger joints.
+   Make each part of the robot arm extendable.
+   Make the robot arm translatable in the x and y directions.
+<p>
+   The tree for this scene is shown below.
+<p>
+   Remember that every position node in the tree contains a matrix,
+   a model and a list of nested positions. The model may be empty,
+   and the list of nested positions may also be empty, but the matrix
+   cannot be "empty" (if you don't give it a value, then it is the
+   identity matrix, I).
+<p>
+<pre>{@code
+          Scene
+         /     \
+        /       \
+  Camera   List<Position>
+               |
+               |
+            Position
+            /  |    \
+           /   |     \
+     Matrix    |     List<Position>
+      TRS      |           |
+               |           |
+              /        Position
+             /         /   |   \
+            /         /    |    \
+           /     Matrix   /      List<Position>
+          |       TRS    /             |
+          |             /              |
+          |            /            Position
+          |           /             /  |   \
+          |          /             /   |    \
+          |         /        Matrix    |     List<Position>
+          |        /          TRS      |           |
+          |       /                   /            |
+           \     /                   /          Position
+            Model ------------------/           /  |   \
+          armSegment                           /   |    \
+                    \                    Matrix    |     List<Position>
+                     \                    TRS     /             |
+                      \                          /            empty
+                       \------------------------/
+
+</pre>
+*/
+
 const resizer = document.getElementById("resizer");
 const ctx = document.getElementById("pixels").getContext("2d");
 var fb = new FrameBuffer(undefined, resizer.offsetWidth, resizer.offsetHeight);
+
+var xTranslation = 0.0;
+var yTranslation = 0.0;
 
 var rotate = true;
 var shoulderRotation = 0.0;
@@ -161,6 +213,9 @@ function keyPressed(e){
 		finger_p.model.lineSegmentList[0].setColors(0, 1);
 	}
 	else if ('=' == c) {
+		xTranslation = 0.0;
+		yTranslation = 0.0;
+
 		shoulderRotation = 0.0;
 		elbowRotation = 0.0;
 		wristRotation = 0.0;
@@ -170,6 +225,18 @@ function keyPressed(e){
         elbowLength = 0.3;
         wristLength = 0.2;
         fingerLength = 0.1;
+	}
+	else if ('x' == c) {
+	   xTranslation += 0.02;
+	}
+	else if ('X' == c) {
+	   xTranslation -= 0.02;
+	}
+	else if ('y' == c) {
+	   yTranslation += 0.02;
+	}
+	else if ('Y' == c) {
+	   yTranslation -= 0.02;
 	}
 	else if (rotate) {
 		if ('s' == c) {
@@ -225,7 +292,7 @@ function keyPressed(e){
 
 	// Update the nested matrices for the sub models.
 	shoulder_p.matrix2Identity();
-	shoulder_p.matrix.mult(Matrix.translate(0, 0, -1));
+	shoulder_p.matrix.mult(Matrix.translate(xTranslation, yTranslation, -1));
 	shoulder_p.matrix.mult(Matrix.rotateZ(shoulderRotation));
 	shoulder_p.matrix.mult(Matrix.scale(shoulderLength,
 										shoulderLength,
@@ -275,6 +342,8 @@ function print_help_message()
 		console.log("Use the w/W keys to extend the length of the arm at the wrist.");
 		console.log("Use the f/F keys to extend the length of the arm at the finger.");
 	}
+	console.log("Use the x/X keys to translate the arm along the x-axis.");
+	console.log("Use the y/Y keys to translate the arm along the y-axis.");
     console.log("Use the '=' key to reset the robot arm.");
     console.log("Use the 'h' key to redisplay this help message.");
 }
@@ -283,6 +352,8 @@ var rotateElement = document.getElementById("rotate");
 rotateElement.onclick = function () {
 	rotate = ! rotate;
 	rotateElement.innerText = (rotate ? "Rotate" : "Lengthen");
+	document.getElementById("rotateHelp").style.display = rotate ? "block" : "none";
+	document.getElementById("lengthenHelp").style.display = rotate ? "none" : "block";
 }
 document.addEventListener("keypress", keyPressed);
 var resizeObserver = new ResizeObserver(function () { display(false); });

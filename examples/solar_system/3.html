@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset=utf-8>
-		<title>Robot Arm 3</title>
+		<title>Solar System 3</title>
 		<link rel="shortcut icon" href="#" />
 		<style>
 			body {
@@ -16,29 +16,43 @@
 				width: 600px;
 				height: 600px;
 			}
-			#rotate {
-				margin-top: 50px;
-				padding: 2px;
+			button {
+				cursor: pointer;
+			}
+			help {
+				padding: 5px;
+				margin: 20px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				background-color: lightgray;
+				border: 2px solid black;
 			}
 		</style>
 	</head>
 
 	<body>
+		<div style="width: 100%;">
+			<div style="text-align: center; font-size: x-large;">Solar System 3</div>
+		</div>
 		<div id="resizer">
 			<canvas id="pixels" width=600 height=600></canvas>
 		</div>
 		<div style="float: left; padding: 2px;">
-			<button onclick="location.href = 'robot_arm_1.html';">Robot Arm 1</button>
-			<button onclick="location.href = 'robot_arm_2.html';">Robot Arm 2</button>
-			<button onclick="location.href = 'robot_arm_4.html';">Robot Arm 4</button>
-			<!-- <button onclick="location.href = 'robot_arms_1.html';">Robot Arms 1</button>
-			<button onclick="location.href = 'robot_arms_2.html';">Robot Arms 2</button>
-			<button onclick="location.href = 'robot_arms_3.html';">Robot Arms 3</button>
-			<button onclick="location.href = 'robot_arms_4.html';">Robot Arms 4</button> -->
-			<div style="margin-top: 50px;">
-				<button id="rotate">Rotate</button>
-			</div>
+			<button onclick="location.href = '1.html';">Solar System 1</button>
+			<button onclick="location.href = '2.html';">Solar System 2</button>
 		</div>
+		<div style="margin: 2px; position: absolute; top: 0; right: 0;">
+			<button style="font-size: medium;" onclick="location = location.origin + '/examples';">Home</button>
+		</div>
+		<help>
+			Use the 'd' key to toggle debugging information on and off.<br>
+			Use the 'a' key to toggle antialiasing on and off.<br>
+			Use the 'g' key to toggle gamma correction on and off.<br>
+			Use the f/F keys to slow down or speed up the frame rate.<br>
+			Use the 'p' key to toggle between parallel and orthographic projection.<br>
+			Use the e/E keys to change the angle of the ecliptic plane.<br>
+		</help>
 
 		<script src="../../scene/Scene.js" type="module"></script>
 		<script src="../../scene/Camera.js" type="module"></script>
@@ -66,6 +80,6 @@
 		<script src="../../framebuffer/FrameBuffer.js" type="module"></script>
 		<script src="../../framebuffer/Viewport.js" type="module"></script>
 
-		<script src="robot_arm_3.js" type="module"></script>
+		<script src="3.js" type="module"></script>
 	</body>
 </html>

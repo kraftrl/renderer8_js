@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset=utf-8>
+		<title>Robot Arm 3</title>
+		<link rel="shortcut icon" href="#" />
+		<style>
+			body {
+				margin: 0;
+				overflow: auto;
+			}
+			#resizer {
+				float: left;
+				overflow: hidden;
+				resize: both;
+				width: 600px;
+				height: 600px;
+			}
+			#rotate {
+				margin-top: 50px;
+				padding: 2px;
+			}
+			button {
+				cursor: pointer;
+			}
+			help {
+				padding: 5px;
+				margin: 20px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				background-color: lightgray;
+				border: 2px solid black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="width: 100%;">
+			<div style="text-align: center; font-size: x-large;">Robot Arm 3</div>
+		</div>
+		<div id="resizer">
+			<canvas id="pixels" width=600 height=600></canvas>
+		</div>
+		<div style="float: left; padding: 2px;">
+			<button onclick="location.href = '1.html';">Robot Arm 1</button>
+			<button onclick="location.href = '2.html';">Robot Arm 2</button>
+			<button onclick="location.href = '4.html';">Robot Arm 4</button>
+			<div style="margin-top: 50px;">
+				<button id="rotate" title="Change how arm is moved.">Rotate</button>
+			</div>
+		</div>
+		<div style="margin: 2px; position: absolute; top: 0; right: 0;">
+			<button style="font-size: medium;" onclick="location = location.origin + '/examples';">Home</button>
+		</div>
+		<help id="rotateHelp">
+			Use the 'a' key to toggle antialiasing on and off.<br>
+			Use the 'g' key to toggle gamma correction on and off.<br>
+			Use the 'c' key to change the random solid arm color.<br>
+			Use the 'C' key to randomly change arm segment colors.<br>
+			Use the 'r' key to randomly change arm segment end colors.<br>
+			Use the 'R' key to randomly change arm hinge colors.<br>
+			Use the s/S keys to rotate the arm at the shoulder.<br>
+			Use the e/E keys to rotate the arm at the elbow.<br>
+			Use the w/W keys to rotate the arm at the wrist.<br>
+			Use the f/F keys to rotate the arm at the finger.<br>
+			Use the '=' key to reset the robot arm.<br>
+		</help>
+		<help id="lengthenHelp" hidden>
+			Use the 'a' key to toggle antialiasing on and off.<br>
+			Use the 'g' key to toggle gamma correction on and off.<br>
+			Use the 'c' key to change the random solid arm color.<br>
+			Use the 'C' key to randomly change arm segment colors.<br>
+			Use the 'r' key to randomly change arm segment end colors.<br>
+			Use the 'R' key to randomly change arm hinge colors.<br>
+			Use the s/S keys to extend the length of the arm at the shoulder.<br>
+			Use the e/E keys to extend the length of the arm at the elbow.<br>
+			Use the w/W keys to extend the length of the arm at the wrist.<br>
+			Use the f/F keys to extend the length of the arm at the finger.<br>
+			Use the '=' key to reset the robot arm.<br>
+		</help>
+		
+		<script src="../../scene/Scene.js" type="module"></script>
+		<script src="../../scene/Camera.js" type="module"></script>
+		<script src="../../scene/Model.js" type="module"></script>
+		<script src="../../scene/ModelShading.js" type="module"></script>
+		<script src="../../scene/LineSegment.js" type="module"></script>
+		<script src="../../scene/Vertex.js" type="module"></script>
+		<script src="../../scene/Vector.js" type="module"></script>
+		<script src="../../scene/Matrix.js" type="module"></script>
+		<script src="../../scene/Position.js" type="module"></script>
+		<script src="../../scene/OrthographicNormalizeMatrix.js" type="module"></script>
+		<script src="../../scene/PerspectiveNormalizeMatrix.js" type="module"></script>
+
+		<script src="../../pipeline/Pipeline.js" type="module"></script>
+		<script src="../../pipeline/Projection.js" type="module"></script>
+		<script src="../../pipeline/Rasterize.js" type="module"></script>
+		<script src="../../pipeline/View2Camera.js" type="module"></script>
+		<script src="../../pipeline/Model2View.js" type="module"></script>
+
+		<script src="../../models/Axes2D.js" type="module"></script>
+		<script src="../../models/Cube.js" type="module"></script>
+		<script src="../../models/Cube2.js" type="module"></script>
+		<script src="../../models/Circle.js" type="module"></script>
+		<script src="../../models/CylinderSector.js" type="module"></script>
+		<script src="../../framebuffer/FrameBuffer.js" type="module"></script>
+		<script src="../../framebuffer/Viewport.js" type="module"></script>
+
+		<script src="3.js" type="module"></script>
+	</body>
+</html>
