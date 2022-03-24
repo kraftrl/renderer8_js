@@ -6,6 +6,7 @@ import { Pipeline } from '../../pipeline/Pipeline.js';
 import { FrameBuffer } from '../../framebuffer/FrameBuffer.js';
 import { Color } from '../../color/Color.js';
 import {Sphere} from '../../models/Sphere.js';
+import { Rasterize } from "../../pipeline/Rasterize.js";
 
 /**
    Draw an animation of a solar system with a sun, planet, and moon.
@@ -143,6 +144,14 @@ function keyPressed(event) {
 	else if ('E' == c) {
 	   ecliptic += 1;
 	   console.log("ecliptic = " + ecliptic);
+	}
+	else if ('a' == c) {
+		Rasterize.doAntialiasing = ! Rasterize.doAntialiasing;
+		console.log("Anti-aliasing is turned " + (Rasterize.doAntialiasing ? "On" : "Off"));
+	}
+	else if ('g' == c) {
+		Rasterize.doGamma = ! Rasterize.doGamma;
+		console.log("Gamma correction is turned " + (Rasterize.doGamma ? "On" : "Off"));
 	}
 
 	// Set up the camera's view volume.

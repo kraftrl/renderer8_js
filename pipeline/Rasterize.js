@@ -87,7 +87,7 @@ export class Rasterize {
                 // y must be between two vertical (or horizontal) logical pixel
                 //  coordinates. Let y_low and y_hi be the logical pixel coordinates
                 // that bracket around y.
-                var y_low = y;                      // the integer part of y
+                var y_low = parseInt(y, 10);                      // the integer part of y
                 var y_hi  = y_low + 1;
                 if (!transposedLine && y == h) y_hi = h; // test for the top edge
                 if ( transposedLine && y == w) y_hi = w; // test for the right edge

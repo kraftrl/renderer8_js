@@ -17,9 +17,9 @@ export class Color{
     // http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/
     static applyGamma(rgba) {
         return new Uint8ClampedArray([
-            Math.round(Math.pow(rgba[0],  Color.GAMMA)),
-            Math.round(Math.pow(rgba[1],  Color.GAMMA)),
-            Math.round(Math.pow(rgba[2],  Color.GAMMA)),
+            255*Math.pow(rgba[0]/255,  Color.GAMMA),
+            255*Math.pow(rgba[1]/255,  Color.GAMMA),
+            255*Math.pow(rgba[2]/255,  Color.GAMMA),
             255
         ]);
     }
