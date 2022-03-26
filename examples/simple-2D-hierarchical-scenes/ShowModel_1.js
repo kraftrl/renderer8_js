@@ -44,8 +44,9 @@ const right  = 6;
 const left   = -right;
 const top    = 6;
 const bottom = -top;
+const near = 2;
 
-scene.camera.projOrtho(left, right, bottom, top);
+scene.camera.projPerspective(left, right, bottom, top, near);
 
 // Add the model to the Scene.
 scene.addPosition([new Position(new Model_1())]);
@@ -68,7 +69,7 @@ timer = setInterval(function () {
 function nextFrame() {
    scene.getPosition(0).matrix2Identity();
    // Push the model away from where the camera is.
-   scene.getPosition(0).matrix.mult(Matrix.translate(0, 0, -3));
+   scene.getPosition(0).matrix.mult(Matrix.translate(0, 0, -1.5));
 
    scene.getPosition(0).matrix.mult(Matrix.rotateZ(10 * frame));
 
