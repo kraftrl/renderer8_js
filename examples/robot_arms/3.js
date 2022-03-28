@@ -94,61 +94,57 @@ const arm2_s = new Position();
 // Add the Position objects to the scene.
 scene.addPosition([arm1_s, arm2_s]);
 
-// Create two Models that can be used
-// for each of the robot arms.
+// Create one Model that can be used
+// for parts of the robot arms.
 const v0 = new Vertex(0, 0, 0);
 const v1 = new Vertex(1, 0, 0);
-const armSegment1 = new Model();
-armSegment1.addVertex([v0, v1]);
-armSegment1.addLineSegment([new LineSegment(0, 1)]);
-ModelShading.setColor(armSegment1, Color.Orange);
-const armSegment2 = new Model();
-armSegment2.addVertex([v0, v1]);
-armSegment2.addLineSegment([new LineSegment(0, 1)]);
-ModelShading.setColor(armSegment2, Color.Blue);
+const armSegment = new Model();
+armSegment.addVertex([v0, v1]);
+armSegment.addLineSegment([new LineSegment(0, 1)]);
+ModelShading.setColor(armSegment, Color.Blue);
 
 /*
    Create two robot arms.
 */
 // First arm.
-arm1_s.model = armSegment1;
+arm1_s.model = armSegment;
 
 // two elbows
-const arm1_e1 = new Position(armSegment1);
-const arm1_e2 = new Position(armSegment1);
+const arm1_e1 = new Position(armSegment);
+const arm1_e2 = new Position(armSegment);
 arm1_s.addNestedPosition([arm1_e1]);
 arm1_s.addNestedPosition([arm1_e2]);
 
 // two wrists
-const arm1_w1 = new Position(armSegment1);
-const arm1_w2 = new Position(armSegment1);
+const arm1_w1 = new Position(armSegment);
+const arm1_w2 = new Position(armSegment);
 arm1_e1.addNestedPosition([arm1_w1]);
 arm1_e2.addNestedPosition([arm1_w2]);
 
 // two fingers
-const arm1_f1 = new Position(armSegment1);
-const arm1_f2 = new Position(armSegment1);
+const arm1_f1 = new Position(armSegment);
+const arm1_f2 = new Position(armSegment);
 arm1_w1.addNestedPosition([arm1_f1]);
 arm1_w2.addNestedPosition([arm1_f2]);
 
 // Second arm.
-arm2_s.model = armSegment2;
+arm2_s.model = armSegment;
 
 // two elbows
-const arm2_e1 = new Position(armSegment2);
-const arm2_e2 = new Position(armSegment2);
+const arm2_e1 = new Position(armSegment);
+const arm2_e2 = new Position(armSegment);
 arm2_s.addNestedPosition([arm2_e1]);
 arm2_s.addNestedPosition([arm2_e2]);
 
 // two wrists
-const arm2_w1 = new Position(armSegment2);
-const arm2_w2 = new Position(armSegment2);
+const arm2_w1 = new Position(armSegment);
+const arm2_w2 = new Position(armSegment);
 arm2_e1.addNestedPosition([arm2_w1]);
 arm2_e2.addNestedPosition([arm2_w2]);
 
 // two fingers
-const arm2_f1 = new Position(armSegment2);
-const arm2_f2 = new Position(armSegment2);
+const arm2_f1 = new Position(armSegment);
+const arm2_f2 = new Position(armSegment);
 arm2_w1.addNestedPosition([arm2_f1]);
 arm2_w2.addNestedPosition([arm2_f2]);
 
@@ -501,10 +497,6 @@ function keyPressed(e){
 	finger2_p[currentArm].matrix.mult(Matrix.scale(fingerLength2[currentArm]/wristLength2[currentArm],
 												   fingerLength2[currentArm]/wristLength2[currentArm],
 												   1));
-
-	// set the current arm to be a different color
-	ModelShading.setColor(arm_p[currentArm].model,Color.Orange);
-	ModelShading.setColor(arm_p[currentArm == 0 ? 1 : 0].model,Color.Blue);
 
 	// Render again.
     display(true);
