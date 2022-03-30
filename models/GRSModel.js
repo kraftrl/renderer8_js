@@ -68,6 +68,6 @@ export class GRSModel extends Model {
                 lineNumber++;
             }
         }
-    console.log(this);
+    //console.log(this);
     }
 }

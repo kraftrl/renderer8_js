@@ -14,6 +14,7 @@ import { CylinderSector } from './models/CylinderSector.js';
 import { Pipeline } from './pipeline/Pipeline.js';
 import { FrameBuffer } from './framebuffer/FrameBuffer.js';
 import { Color } from './color/Color.js';
+import { Rasterize } from './pipeline/Rasterize.js';
 
 // Used for transformations.
 var xTranslation = 0.0;
@@ -84,7 +85,21 @@ function keyPressed(event) {
 		print_help_message();
 	}
 	else if ('d' == c) {
-		ctx.imageSmoothingEnabled = !ctx.imageSmoothingEnabled;
+        scene.positionList[currentPosition].model.debug =  !scene.positionList[currentPosition].model.debug;
+		console.log("Degbug for current model is turned " + (scene.positionList[currentPosition].model.debug ? "On" : "Off"));	
+	}
+	else if ('j' == c) {
+        Pipeline.doClipping = ! Pipeline.doClipping;
+        console.log("Clipping is turned ");
+        console.log(Pipeline.doClipping ? "On" : "Off");  
+	}
+	else if ('a' == c) {
+		Rasterize.doAntialiasing = ! Rasterize.doAntialiasing;
+		console.log("Anti-aliasing is turned " + (Rasterize.doAntialiasing ? "On" : "Off"));
+	}
+	else if ('g' == c) {
+		Rasterize.doGamma = ! Rasterize.doGamma;
+		console.log("Gamma correction is turned " + (Rasterize.doGamma ? "On" : "Off"));
 	}
 	else if ('p' == c) {
 		scene.camera.perspective = ! scene.camera.perspective;
@@ -252,8 +267,11 @@ function display(){
 
 function print_help_message()
 {
-	console.log("Use the 'd/D' keys to toggle debugging information on and off for the current model.");
+	console.log("Use the 'd' key to toggle debugging information on and off for the current model.");
 	console.log("Use the '/' key to cycle through the models.");
+	console.log("Use the 'a' turn on/off AntiAliasing.");
+	console.log("Use the 'g' turn on/off Gamma.");
+	console.log("Use the 'j' key to turn on/off Clipping.");
 
 	// Camera controls
 	console.log("Use the 'p' key to toggle between parallel and orthographic projection.");
