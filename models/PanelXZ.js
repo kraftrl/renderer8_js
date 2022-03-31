@@ -41,6 +41,6 @@ export class PanelXZ extends Model {
             }
         }
 
-        console.log(this);
+        //console.log(this);
     }
 }

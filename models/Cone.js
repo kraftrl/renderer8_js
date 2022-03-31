@@ -1,7 +1,7 @@
 import { Model } from './../scene/Model.js';
 import { LineSegment } from './../scene/LineSegment.js';
 import { Vertex } from './../scene/Vertex.js';
-
+import { ConeSector } from './ConeSector.js';
 /**
    Create a wireframe model of a right circular cone with its base
    parallel to the xz-plane and its apex on the positive y-axis.

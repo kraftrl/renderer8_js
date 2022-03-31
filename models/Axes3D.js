@@ -30,9 +30,9 @@ export class Axes3D extends Model {
 
         this.addColor(cX, cY, cZ);
 
-        this.addLineSegment([new LineSegment(0, 1, 0),
-                             new LineSegment(2, 3, 1),
-                             new LineSegment(4, 5, 2)]);
+        this.addLineSegment([new LineSegment(0, 1, 0, 0),
+                             new LineSegment(2, 3, 1, 1),
+                             new LineSegment(4, 5, 2, 2)]);
 
     }
 }
