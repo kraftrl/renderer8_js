@@ -151,7 +151,7 @@ for (var k = 0; k < 360; k++) {
     // Render
     //Renderer.doAntialiasing = true;
 
-    fb.clearFB(Color.black);
+    fb.clearFB(Color.Black);
     Pipeline.render(scene, fb.vp);
     fb.dumpFB2File(`PPM_Geometries_R8_Frame${k}.ppm`);
 

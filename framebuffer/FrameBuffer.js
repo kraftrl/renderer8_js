@@ -316,17 +316,23 @@ export class FrameBuffer
 
 
       // dynamically import and then call writeFile (use async/await notation)
-      (async () => {
-         const fs = await import('node:fs/promises');
-         fs.writeFile(filename, "P6\n" + p_width + " " + p_height + "\n" + 255 + "\n",
-                        err => {if (err) throw err;});
-      })();
+      // (async () => {
+      //    const fs = await import('node:fs/promises');
+      //    fs.writeFile(filename, "P6\n" + p_width + " " + p_height + "\n" + 255 + "\n",
+      //                   err => {if (err) throw err;});
+      // })();
 
       // dynamically import and then call writeFile (use the notation of promises)
       //import('node:fs/promises').then(fs => {
       //   fs.writeFile(filename, "P6\n" + p_width + " " + p_height + "\n" + 255 + "\n",
       //                err => {if (err) throw err;});
       //});
+
+      // uses synchronous API to avoid file corruption
+      import('node:fs').then(fs => {
+        fs.writeFileSync(filename, "P6\n" + p_width + " " + p_height + "\n" + 255 + "\n",
+                     err => {if (err) throw err;});
+      });
 
       var tempPB = new Uint8ClampedArray(p_width * p_height * 3);
 
@@ -353,8 +359,14 @@ export class FrameBuffer
       //})();
 
       // dynamically import and then call appendFile (use the notation of promises)
-      import('node:fs/promises').then(fs => {
-         fs.appendFile(filename, Buffer.from(tempPB),
+      // import('node:fs/promises').then(fs => {
+      //    fs.appendFile(filename, Buffer.from(tempPB),
+      //                   err => {if (err) throw err;});
+      // });
+
+      // uses synchronous API to avoid file corruption
+      import('node:fs').then(fs => {
+         fs.appendFileSync(filename, Buffer.from(tempPB),
                         err => {if (err) throw err;});
       });
    }

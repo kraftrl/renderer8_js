@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset=utf-8>
+		<title>NestedModels_v1a</title>
+		<link rel="shortcut icon" href="#" />
+		<style>
+			body {
+				margin: 0;
+				overflow: auto;
+			}
+			#resizer {
+				float: left;
+				overflow: hidden;
+				resize: both;
+				width: 600px;
+				height: 600px;
+			}
+			button {
+				cursor: pointer;
+			}
+			help {
+				padding: 5px;
+				margin: 20px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				background-color: lightgray;
+				border: 2px solid black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div style="width: 100%;">
+			<div style="text-align: center; font-size: x-large;">NestedModels_v1a</div>
+		</div>
+		<div id="resizer">
+			<canvas id="pixels" width=600 height=600></canvas>
+		</div>
+		<div style="float: left; padding: 2px;">
+			<button onclick="location.href = 'NestedModels_v1.html';">NestedModels_v1</button>
+			<button onclick="location.href = 'NestedModels_v1a.html';" hidden>NestedModels_v1a</button>
+			<button onclick="location.href = 'NestedModels_v2.html';"	>NestedModels_v2</button>
+			<button onclick="location.href = 'NestedPrisms_v1.html';"	>NestedPrisms_v1</button>
+			<button onclick="location.href = 'NestedPrisms_v2.html';"	>NestedPrisms_v2</button>
+            <button onclick="location.href = 'NestedPrisms_v3.html';">NestedPrisms_v3</button>
+		</div>
+		<div style="margin: 2px; position: absolute; top: 0; right: 0;">
+			<button style="font-size: medium;" onclick="location = location.origin + '/examples/';">Home</button>
+		</div>
+		<help>
+			Use the 'p' to pause the animation.<br>
+			Use the 'f' key to display the next frame.<br>
+			*Drag and drop .js file over run_client.cmd to create the .ppm files for each frame in the offline version (must have Nodejs installed).<br>
+		</help>
+
+		<script src="../../scene/Scene.js" type="module"></script>
+		<script src="../../scene/Camera.js" type="module"></script>
+		<script src="../../scene/Model.js" type="module"></script>
+		<script src="../../scene/ModelShading.js" type="module"></script>
+		<script src="../../scene/LineSegment.js" type="module"></script>
+		<script src="../../scene/Vertex.js" type="module"></script>
+		<script src="../../scene/Vector.js" type="module"></script>
+		<script src="../../scene/Matrix.js" type="module"></script>
+		<script src="../../scene/Position.js" type="module"></script>
+		<script src="../../scene/OrthographicNormalizeMatrix.js" type="module"></script>
+		<script src="../../scene/PerspectiveNormalizeMatrix.js" type="module"></script>
+
+		<script src="../../pipeline/Pipeline.js" type="module"></script>
+		<script src="../../pipeline/Projection.js" type="module"></script>
+		<script src="../../pipeline/Rasterize.js" type="module"></script>
+		<script src="../../pipeline/View2Camera.js" type="module"></script>
+		<script src="../../pipeline/Model2View.js" type="module"></script>
+
+		<script src="../../models/Axes2D.js" type="module"></script>
+		<script src="../../models/Cube.js" type="module"></script>
+		<script src="../../models/Cube2.js" type="module"></script>
+		<script src="../../models/Circle.js" type="module"></script>
+		<script src="../../models/CylinderSector.js" type="module"></script>
+		<script src="../../framebuffer/FrameBuffer.js" type="module"></script>
+		<script src="../../framebuffer/Viewport.js" type="module"></script>
+
+		<script src="NestedModels_v1a.js" type="module"></script>
+	</body>
+</html>
