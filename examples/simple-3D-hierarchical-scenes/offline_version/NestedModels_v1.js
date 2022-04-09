@@ -50,6 +50,7 @@ import { PanelXZ } from '../../../models/PanelXZ.js';
                         Matrix   Model   nested Positions
                           R    (sphere)      (empty)
 }</pre>
+* @overview
 */
    
 // Create the Scene object that we shall render.

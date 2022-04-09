@@ -50,6 +50,7 @@ import { PanelXZ } from '../../models/PanelXZ.js';
                         Matrix   Model   nested Positions
                           R    (sphere)      (empty)
 }</pre>
+* @overview
 */
 
 // Timer for frames.

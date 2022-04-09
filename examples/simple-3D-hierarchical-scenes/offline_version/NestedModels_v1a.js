@@ -44,6 +44,7 @@ import { PanelXZ } from '../../../models/PanelXZ.js';
                                 Model
                               (sphere)
 }</pre>
+* @overview
 */
 
 // Create the Scene object that we shall render.

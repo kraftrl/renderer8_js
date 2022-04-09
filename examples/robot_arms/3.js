@@ -45,6 +45,7 @@ import { Vertex } from "../../scene/Vertex.js";
                                Model
                              armSegment
 </pre>
+* @overview
 */
 
 const resizer = document.getElementById("resizer");

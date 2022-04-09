@@ -40,6 +40,7 @@ import { TriangularPrism} from '../../../models/TriangularPrism.js';
                                           \ |  | /
                                        TriangularPrism
 }</pre>
+* @overview
 */
 
 const sqrt3 = Math.sqrt(3.0);

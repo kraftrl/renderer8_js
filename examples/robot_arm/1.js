@@ -53,6 +53,7 @@ import { Vertex } from "../../scene/Vertex.js";
                                           TR     finger         |
                                                               empty
 </pre>
+* @overview
 */
 
 const resizer = document.getElementById("resizer");
