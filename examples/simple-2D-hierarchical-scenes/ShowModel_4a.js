@@ -56,6 +56,7 @@ import { Model_1 } from "./Model_1.js";
                                       Matrix   Model_1    Matrix    Model_1
                                         I      (red)       TSR      (blue)
 }</pre>
+* @overview
 */
 // Create the Scene object that we shall render.
 const scene = new Scene();

@@ -38,6 +38,7 @@ import { Rasterize } from "../../pipeline/Rasterize.js";
                                  Matrix     Model      Matrix     Model
                                    R       (planet)      TR      (moon)
 }</pre>
+* @overview
 */
 
 var fps;

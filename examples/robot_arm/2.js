@@ -55,6 +55,7 @@ import { Vertex } from "../../scene/Vertex.js";
                        \------------------------/
 
 </pre>
+* @overview
 */
 
 const resizer = document.getElementById("resizer");

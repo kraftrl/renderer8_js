@@ -40,6 +40,7 @@ import { TriangularPrism} from '../../models/TriangularPrism.js';
                                           \ |  | /
                                        TriangularPrism
 }</pre>
+* @overview
 */
 
 // Timer for frames.

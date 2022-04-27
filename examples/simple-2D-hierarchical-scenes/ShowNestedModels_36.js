@@ -78,6 +78,7 @@ import { Model_1 } from "./Model_1.js";
                                                             \         /
                                                               Model_1
 }</pre>
+* @overview
 */
 // Create the Scene object that we shall render.
 const scene = new Scene();

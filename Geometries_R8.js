@@ -28,6 +28,7 @@ import { TriangularPrism} from "./models/TriangularPrism.js";
       https://stemkoski.github.io/Three.js/Shapes.html
    or
       http://www.smartjava.org/ltjs/chapter-02/04-geometries.html
+* @overview
 */
 
 //Pipeline.debug = true;   
