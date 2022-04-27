@@ -12,6 +12,9 @@
 				display: flex;
 			}
 				#section div {
+					border-top: 2px solid black;
+					border-bottom: 2px solid black;
+					border-left: 2px solid black;
 					width: 100%;
 					height: 100%;
 					cursor: pointer;
@@ -20,6 +23,9 @@
 					justify-content: center;
 					text-align: center;
 					font-size: xx-large;
+				}
+				#section div:last-of-type {
+					border-right: 2px solid black;
 				}
 		</style>
 	</head>
@@ -30,8 +36,8 @@
 			<div style="background-color: aqua;" onclick="location.href = 'robot_arm/1.html';">Robot Arm</div>
 			<div style="background-color: gold;" onclick="location.href = 'robot_arms/1.html';">Robot Arms</div>
 			<div style="background-color: salmon;" onclick="location.href = 'solar_system/1.html';">Solar System</div>
-			<div style="background-color: aquamarine;" onclick="location.href = 'simple-2D-hierarchical-scenes/ShowModel_1.html';">Simple 2D-hierarchical Scenes</div>
-			<div style="background-color: violet;" onclick="location.href = 'simple-3D-hierarchical-scenes/NestedModels_v1.html';">Simple 3D-hierarchical Scenes</div>
+			<div style="background-color: aquamarine;" onclick="location.href = 'simple-2D-hierarchical-scenes/ShowModel_1.html';">Simple 2D<br>Hierarchical<br>Scenes</div>
+			<div style="background-color: violet;" onclick="location.href = 'simple-3D-hierarchical-scenes/NestedModels_v1.html';">Simple 3D<br>Hierarchical<br>Scenes</div>
 		</div>
 		<div style="margin: 2px; position: absolute; top: 0; right: 0;">
 			<button style="font-size: medium; cursor: pointer;" onclick="location = location.origin;">Home</button>

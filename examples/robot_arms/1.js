@@ -249,7 +249,7 @@ function keyPressed(e){
 		  wrist1_p.model.colorList = [c3, c5];
 		  wrist2_p.model.colorList = [c4, c6];
 		 finger1_p.model.colorList = [c5, c7];
-		 finger2_p.model.colorList = [c6, c6];
+		 finger2_p.model.colorList = [c6, c8];
 		shoulder_p.model.lineSegmentList[0].setColors(0, 1);
 		  elbow1_p.model.lineSegmentList[0].setColors(0, 1);
 		  elbow2_p.model.lineSegmentList[0].setColors(0, 1);
